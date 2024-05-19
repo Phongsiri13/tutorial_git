@@ -1,2 +1,3 @@
 /not_track.txt
 *.log
+/testRedis/node_modules
