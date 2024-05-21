@@ -11,4 +11,4 @@ The most git command used
 	- get branch
 	- get checkout
 
-777
+755
