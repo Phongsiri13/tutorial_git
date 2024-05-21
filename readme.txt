@@ -6,3 +6,9 @@ git pull # pull latest data from git server
 
 The most git command used
 	- git log
+	- git merge
+	- git switch
+	- get branch
+	- get checkout
+
+777
