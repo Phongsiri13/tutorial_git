@@ -1,7 +1,25 @@
 const express = require('express');
+var { createHandler } = require("graphql-http/lib/use/express")
+var { buildSchema } = require("graphql")
 const { createClient } = require('redis');
 
 const app = express();
+
+var schema = buildSchema(`
+  type Query {
+    hql: String
+    shirtColor: String
+  }
+`)
+
+const resolver = {
+  hql() {
+    return "Testing garphql"
+  },
+  shirtColor(){
+    return "Red"
+  }
+}
 
 // Create a Redis client connected to the specified port
 const client = createClient({
@@ -25,6 +43,11 @@ client.connect().catch(err => {
 });
 
 app.use(express.json());
+
+app.use('/hql', createHandler({
+  schema: schema,
+  rootValue: resolver
+}))
 
 // Fetch all keys and their values
 app.get('/all-keys', async (req, res) => {
@@ -66,15 +89,15 @@ app.get('/:id', async (req, res) => {
   }
 });
 
-app.post('/data', async (req, res) => {
-  const { key, value } = req.body;
-  try {
-    const reply = await client.set(key, value);
-    res.send(reply);
-  } catch (err) {
-    res.status(500).send(err.toString());
-  }
-});
+// app.post('/data', async (req, res) => {
+//   const { key, value } = req.body;
+//   try {
+//     const reply = await client.set(key, value);
+//     res.send(reply);
+//   } catch (err) {
+//     res.status(500).send(err.toString());
+//   }
+// });
 
 app.listen(3000, () => {
   console.log('Server running on port 3000');
