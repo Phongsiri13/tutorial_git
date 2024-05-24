@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "firstName": "John",
+    "lastName": "Doe",
+    "salary": 50000,
+    "age": 30,
+    "position": "Software Engineer",
+    "department": "Engineering",
+    "start_date": "2022-01-15",
+    "gender": "Male"
+  },
+  {
+    "id": 2,
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "salary": 60000,
+    "age": 35,
+    "position": "Product Manager",
+    "department": "Product",
+    "start_date": "2021-11-20",
+    "gender": "Female"
+  },
+  {
+    "id": 3,
+    "firstName": "Michael",
+    "lastName": "Johnson",
+    "salary": 70000,
+    "age": 40,
+    "position": "Senior Software Engineer",
+    "department": "Engineering",
+    "start_date": "2020-09-10",
+    "gender": "Male"
+  },
+  {
+    "id": 4,
+    "firstName": "Emily",
+    "lastName": "Brown",
+    "salary": 55000,
+    "age": 28,
+    "position": "Data Analyst",
+    "department": "Data",
+    "start_date": "2023-03-25",
+    "gender": "Female"
+  },
+  {
+    "id": 5,
+    "firstName": "David",
+    "lastName": "Miller",
+    "salary": 65000,
+    "age": 32,
+    "position": "Project Manager",
+    "department": "Project Management",
+    "start_date": "2021-05-12",
+    "gender": "Male"
+  },
+  {
+    "id": 6,
+    "firstName": "Sarah",
+    "lastName": "Wilson",
+    "salary": 48000,
+    "age": 27,
+    "position": "Junior Developer",
+    "department": "Engineering",
+    "start_date": "2023-08-18",
+    "gender": "Female"
+  },
+  {
+    "id": 7,
+    "firstName": "Christopher",
+    "lastName": "Martinez",
+    "salary": 75000,
+    "age": 38,
+    "position": "Engineering Manager",
+    "department": "Engineering",
+    "start_date": "2020-07-05",
+    "gender": "Male"
+  },
+  {
+    "id": 8,
+    "firstName": "Amanda",
+    "lastName": "Taylor",
+    "salary": 58000,
+    "age": 31,
+    "position": "UX Designer",
+    "department": "Design",
+    "start_date": "2022-04-30",
+    "gender": "Female"
+  },
+  {
+    "id": 9,
+    "firstName": "James",
+    "lastName": "Anderson",
+    "salary": 62000,
+    "age": 33,
+    "position": "Data Scientist",
+    "department": "Data",
+    "start_date": "2021-02-28",
+    "gender": "Male"
+  },
+  {
+    "id": 10,
+    "firstName": "Jennifer",
+    "lastName": "Garcia",
+    "salary": 70000,
+    "age": 36,
+    "position": "Quality Assurance Lead",
+    "department": "Quality Assurance",
+    "start_date": "2020-12-15",
+    "gender": "Female"
+  }
+]

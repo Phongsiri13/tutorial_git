@@ -3,21 +3,63 @@ var { createHandler } = require("graphql-http/lib/use/express")
 var { buildSchema } = require("graphql")
 const { createClient } = require('redis');
 
+// Demo data
+const employees_data = require("./employee");
+// console.log(employees[0]) // debug
+
 const app = express();
 
+// Set schema that match to database
+// It's object type
 var schema = buildSchema(`
   type Query {
-    hql: String
-    shirtColor: String
+    employee(id: ID!): Employee
+    employees(limit: Int = 6, gender: String, age: AGE): [Employee]
   }
+
+  type Employee {
+    id: Int
+    firstName: String
+    lastName: String
+    salary: Int
+    age: Int
+    gender: String
+  }
+
+  enum AGE{
+    YOUNG
+    OLD
+  }
+
 `)
 
+// position: String
+// department: String
+// start_date: String
+
+// value of key search
 const resolver = {
-  hql() {
-    return "Testing garphql"
+  employee(args){
+    // console.log(args.id)
+    console.log(employees_data.find(d=> d.id == args.id))
+    return employees_data.find(d=> d.id == args.id)
   },
-  shirtColor(){
-    return "Red"
+  employees(args){
+    let emp = [].concat(employees_data)
+    console.log("arg:",args)
+    // reflex url
+    if(args.gender){
+      emp = emp.filter(d=> d.gender == args.gender)
+    }
+
+    if(args.age){
+      if(args.age == "YOUNG") emp = emp.filter(d=> d.age <= 28)
+      else if(args.age = "OLD") emp = emp.filter(d=> d.age > 28)
+      // emp = args.age == "YOUNG" ? emp.filter(d=> d.age <= 28):emp.filter(d=> d.age > 28)
+    }
+
+    // console.log(args)
+    return emp.slice(0, args.limit)
   }
 }
 
@@ -44,6 +86,7 @@ client.connect().catch(err => {
 
 app.use(express.json());
 
+// Test on garphql
 app.use('/hql', createHandler({
   schema: schema,
   rootValue: resolver

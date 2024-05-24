@@ -1,3 +1,14 @@
 # redis
 
 # graphQL
+{
+  "query": "{ employees(limit: 8, gender: \"Male\") { id firstName age gender } }"
+}
+type Query {
+    employee(id: ID!): Employee
+    employees(limit: Int = 6, gender: String, age: AGE): [Employee]
+}
+enum AGE{
+    YOUNG
+    OLD
+}
