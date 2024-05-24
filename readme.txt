@@ -16,12 +16,14 @@ The most git command used
 	- git branch
 	- git branch [branch-name] # for created
 	- git branch -d [branch-name] # for delete the branch
-
-# Git branch
-main branch for deploy to production , v0.1, v0.2
-developer branch
-feature
+	- git log --oneline # show each git history only 1 line
 
 
-755
+# Git branch detail
+	- main branch for deploy to production , v0.1, v0.2
+	- developer branch
+	- feature
 
+# Git merge detail
+	- fast forward # move code the branch to another branch by merge
+	- conflict case that fix the same file It show conflict when merge not fast-forward
