@@ -1,11 +1,15 @@
 const express = require('express');
 var { createHandler } = require("graphql-http/lib/use/express")
 var { buildSchema } = require("graphql")
+const axios = require("axios")
 const { createClient } = require('redis');
 
-// Demo data
-const employees_data = require("./employee");
-// console.log(employees[0]) // debug
+const employees_data = require('./employee')
+
+const endpoints = [
+  "http://localhost:3000/employees",
+]
+
 
 const app = express();
 
@@ -39,27 +43,40 @@ var schema = buildSchema(`
 
 // value of key search
 const resolver = {
-  employee(args){
-    // console.log(args.id)
-    console.log(employees_data.find(d=> d.id == args.id))
-    return employees_data.find(d=> d.id == args.id)
+  async employee(args){
+    // return new Promise((resolve , reject)=>{
+
+    //   console.log("querying data")
+    //   setTimeout(() => {
+    //     resolve(employees_data.find(d=> d.id == args.id))
+    //   }, 1000);
+    // })
+    // console.log("test:",args)
+    const {data:employees} = await axios.get(`${endpoints[0]}/${args.id}`)
+
+    return employees
   },
-  employees(args){
-    let emp = [].concat(employees_data)
-    console.log("arg:",args)
-    // reflex url
-    if(args.gender){
-      emp = emp.filter(d=> d.gender == args.gender)
-    }
+  // employees(args){
+  //   let emp = [].concat(employees_data)
+  //   console.log("arg:",args)
+  //   // reflex url
+  //   if(args.gender){
+  //     emp = emp.filter(d=> d.gender == args.gender)
+  //   }
 
-    if(args.age){
-      if(args.age == "YOUNG") emp = emp.filter(d=> d.age <= 28)
-      else if(args.age = "OLD") emp = emp.filter(d=> d.age > 28)
-      // emp = args.age == "YOUNG" ? emp.filter(d=> d.age <= 28):emp.filter(d=> d.age > 28)
-    }
+  //   if(args.age){
+  //     if(args.age == "YOUNG") emp = emp.filter(d=> d.age <= 28)
+  //     else if(args.age = "OLD") emp = emp.filter(d=> d.age > 28)
+  //     // emp = args.age == "YOUNG" ? emp.filter(d=> d.age <= 28):emp.filter(d=> d.age > 28)
+  //   }
 
-    // console.log(args)
-    return emp.slice(0, args.limit)
+  //   // console.log(args)
+  //   return emp.slice(0, args.limit)
+  // }
+  async employees(args){
+    // console.log("test:",args)
+    const {data:employees} = await axios.get(`${endpoints[0]}?_limit=${args.limit}`)
+    return employees
   }
 }
 
@@ -91,6 +108,21 @@ app.use('/hql', createHandler({
   schema: schema,
   rootValue: resolver
 }))
+
+app.get('/employees', (req,res)=>{
+  console.log("::", req.query)
+  if(req.query){
+    return res.send(employees_data.find(item => item.id == req.query.id));
+  }
+  return res.send(employees_data.slice(0, parseInt(req.query._limit) || 10));
+})
+
+app.get('/employees/:id', (req,res)=>{
+  // console.log("::x", req.params.id)
+  if(req.query){
+    return res.send(employees_data.find(item => item.id == parseInt(req.params.id)));
+  }
+})
 
 // Fetch all keys and their values
 app.get('/all-keys', async (req, res) => {
