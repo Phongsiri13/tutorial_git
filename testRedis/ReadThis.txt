@@ -1,4 +1,10 @@
 # redis
+For dev
+# start server
+redis-server --port 6739
+
+# access to the redis database
+redis-cli -p 6739
 
 # graphQL
 {

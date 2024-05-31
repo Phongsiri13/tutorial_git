@@ -12,6 +12,14 @@ const endpoints = [
 
 const app = express();
 
+// Logger middleware function
+function logger(req, res, next) {
+  console.log(`logger: [${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next(); // Call next middleware or route handler
+}
+
+// Apply the logger middleware to all routes
+app.use(logger);
 
 // ########## GarphQL Testing #############
 // Set schema that match to database
